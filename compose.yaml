@@ -177,6 +177,28 @@ services:
     networks:
       - vspc
 
+  gitlab-db-backup:
+    container_name: gitlab-db-backup
+    restart: always
+    image: vnspc/postgres-backup:14
+    environment:
+      - SCHEDULE=${SCHEDULE:-@weekly}
+      - BACKUP_KEEP_DAYS=${BACKUP_KEEP_DAYS:-7}
+      - PASSPHRASE=${PASSPHRASE:-passphrase}
+      - S3_REGION=${S3_REGION:-region}
+      - S3_BUCKET=${S3_BUCKET:-bucket}
+      - S3_PREFIX=${S3_PREFIX:-prefix}
+      - S3_ACCESS_KEY_ID=${S3_ACCESS_KEY_ID:-key}
+      - S3_SECRET_ACCESS_KEY=${S3_SECRET_ACCESS_KEY:-secret}
+      - POSTGRES_HOST=${POSTGRES_HOST:-gitlab-db}
+      - POSTGRES_USER=${POSTGRES_USER:-gitlab}
+      - POSTGRES_DATABASE=${POSTGRES_DATABASE:-gitlabhq-production}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-password}
+    depends_on:
+      - gitlab-db
+    networks:
+      - vspc
+
 networks:
   vspc:
     driver: bridge
