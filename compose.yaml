@@ -1,0 +1,21 @@
+version: '2.3'
+
+services:
+  gitlab-db:
+    container_name: gitlab-db
+    restart: always
+    image: sameersbn/postgresql:14-20230628
+    volumes:
+      - /home/data/database:/var/lib/postgresql:Z
+    environment:
+      - DB_USER=${DB_USER:-gitlab}
+      - DB_NAME=${DB_NAME:-gitlabhq-production}
+      - DB_PASS=${DB_PASS:-password}
+      - DB_EXTENSION=${DB_EXTENSION:-pg_trgm,btree_gist}
+    networks:
+      - vspc
+
+networks:
+  vspc:
+    driver: bridge
+    name: vspc
