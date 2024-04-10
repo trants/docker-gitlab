@@ -166,6 +166,17 @@ services:
     networks:
       - vspc
 
+  gitlab-runner:
+    container_name: gitlab-runner
+    restart: always
+    image: gitlab/gitlab-runner:alpine
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - gitlab
+    networks:
+      - vspc
+
 networks:
   vspc:
     driver: bridge
