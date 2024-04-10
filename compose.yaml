@@ -15,6 +15,17 @@ services:
     networks:
       - vspc
 
+  gitlab-redis:
+    container_name: gitlab-redis
+    restart: always
+    image: redis:6.2.6
+    command:
+      - --loglevel warning
+    volumes:
+      - /home/data/redis:/data:Z
+    networks:
+      - vspc
+
 networks:
   vspc:
     driver: bridge
