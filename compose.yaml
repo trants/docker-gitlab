@@ -130,11 +130,11 @@ services:
       - OAUTH_AZURE_API_SECRET=${OAUTH_AZURE_API_SECRET}
       - OAUTH_AZURE_TENANT_ID=${OAUTH_AZURE_TENANT_ID}
     healthcheck:
-      test: [ "CMD", "/usr/local/sbin/healthcheck" ]
+      test: ["CMD", "curl", "-f", "http://localhost"]
       interval: 5m
       timeout: 10s
       retries: 3
-      start_period: 15m
+      start_period: 5m
     depends_on:
       - gitlab-db
       - gitlab-redis
