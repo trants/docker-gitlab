@@ -139,7 +139,7 @@ services:
       - gitlab-db
       - gitlab-redis
     networks:
-      - network-bridge
+      - vspc
 
   gitlab-db:
     container_name: gitlab-db
@@ -153,7 +153,7 @@ services:
       - DB_PASS=${DB_PASS:-password}
       - DB_EXTENSION=${DB_EXTENSION:-pg_trgm,btree_gist}
     networks:
-      - network-bridge
+      - vspc
 
   gitlab-redis:
     container_name: gitlab-redis
@@ -164,7 +164,7 @@ services:
     volumes:
       - /home/data/redis:/data:Z
     networks:
-      - network-bridge
+      - vspc
 
   gitlab-runner:
     container_name: gitlab-runner
@@ -175,7 +175,7 @@ services:
     depends_on:
       - gitlab
     networks:
-      - network-bridge
+      - vspc
 
   gitlab-db-backup:
     container_name: gitlab-db-backup
@@ -197,9 +197,9 @@ services:
     depends_on:
       - gitlab-db
     networks:
-      - network-bridge
+      - vspc
 
 networks:
-  network-bridge:
+  vspc:
     driver: bridge
-    name: network-bridge
+    name: vspc
